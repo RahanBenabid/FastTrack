@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B65D78932C35B08300D5B300 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65D78922C35B08300D5B300 /* Track.swift */; };
+		B65D78952C35C42500D5B300 /* TrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65D78942C35C42500D5B300 /* TrackView.swift */; };
 		B682198B2C33566E00D35F2A /* FastTrackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B682198A2C33566E00D35F2A /* FastTrackApp.swift */; };
 		B682198D2C33566E00D35F2A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B682198C2C33566E00D35F2A /* ContentView.swift */; };
 		B682198F2C33567100D35F2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B682198E2C33567100D35F2A /* Assets.xcassets */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B65D78922C35B08300D5B300 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		B65D78942C35C42500D5B300 /* TrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackView.swift; sourceTree = "<group>"; };
 		B68219872C33566E00D35F2A /* FastTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B682198A2C33566E00D35F2A /* FastTrackApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTrackApp.swift; sourceTree = "<group>"; };
 		B682198C2C33566E00D35F2A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 		B682197E2C33566E00D35F2A = {
 			isa = PBXGroup;
 			children = (
+				B65D78942C35C42500D5B300 /* TrackView.swift */,
+				B65D78922C35B08300D5B300 /* Track.swift */,
 				B68219892C33566E00D35F2A /* FastTrack */,
 				B682199B2C33567100D35F2A /* FastTrackTests */,
 				B68219A52C33567100D35F2A /* FastTrackUITests */,
@@ -261,6 +267,8 @@
 			files = (
 				B682198D2C33566E00D35F2A /* ContentView.swift in Sources */,
 				B682198B2C33566E00D35F2A /* FastTrackApp.swift in Sources */,
+				B65D78952C35C42500D5B300 /* TrackView.swift in Sources */,
+				B65D78932C35B08300D5B300 /* Track.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
