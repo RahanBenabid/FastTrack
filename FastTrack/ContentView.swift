@@ -32,6 +32,9 @@ struct ContentView: View {
     }
     @State private var searchState = SearchState.none
     
+    @State private var searches = [String]()
+    
+    
     /**
      he adsychronous keyword tells the function it can run at the same time as the other functions, so the function can pause itself kind of like "give the function the ability to sleep while other work is being done", used mainly when fetching data from the internet, so your computer can do a lot of things during that time and not just freeze completely
      */
@@ -52,6 +55,7 @@ struct ContentView: View {
     
     /// this function will brdge between SwiftUI and the `async` method since it cannot call it directly, it will call it and wait for it to finish
     func startSearch() {
+        searches.append(searchText)
         searchState = .seaching
         Task {
             do {
@@ -64,31 +68,40 @@ struct ContentView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                TextField("Search for a song", text: $searchText)
-                    .onSubmit(startSearch)
-                Button("Search", action: startSearch)
+        NavigationView {
+            List{
+                ForEach(tracks) { track in
+                    Text(track.artistName)
+                }
             }
-            .padding([.top, .horizontal])
+            .frame(minWidth: 200)
             
-            ScrollView {
-                switch searchState {
-                case .none:
-                    Text("Enter a search to begin.")
-                        .frame(maxHeight: .infinity)
-                case .seaching:
-                    ProgressView()
-                case .success:
-                    LazyVGrid(columns: gridItems) {
-                        ForEach(tracks) { track in
-                            TrackView(track: track, onSelected: play)
+            VStack {
+                HStack {
+                    TextField("Search for a song", text: $searchText)
+                        .onSubmit(startSearch)
+                    Button("Search", action: startSearch)
+                }
+                .padding([.top, .horizontal])
+                
+                ScrollView {
+                    switch searchState {
+                    case .none:
+                        Text("Enter a search to begin.")
+                            .frame(maxHeight: .infinity)
+                    case .seaching:
+                        ProgressView()
+                    case .success:
+                        LazyVGrid(columns: gridItems) {
+                            ForEach(tracks) { track in
+                                TrackView(track: track, onSelected: play)
+                            }
                         }
+                        .padding()
+                    case .error:
+                        Text("Sorry, your search failed – please check your internet connection then try again.")
+                            .frame(maxHeight: .infinity)
                     }
-                    .padding()
-                case .error:
-                    Text("Sorry, your search failed – please check your internet connection then try again.")
-                    .frame(maxHeight: .infinity)
                 }
             }
         }
