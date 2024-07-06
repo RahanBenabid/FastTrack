@@ -8,7 +8,7 @@
 import Foundation
 
 /// they MUST match the JSON structure, and the `Decodable` protocol is for turning JSON into Swift Data, possible because all our datatype conform to it  like `Int, String`
-struct Track: Identifiable, Decodable {
+struct Track: Identifiable, Decodable, Hashable {
     let trackId: Int
     var id: Int { trackId }
     let artistName: String

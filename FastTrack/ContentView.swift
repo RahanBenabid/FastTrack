@@ -31,7 +31,7 @@ struct ContentView: View {
         case none, seaching, success, error
     }
     @State private var searchState = SearchState.none
-    
+    @State private var selectedSong = ""
     @State private var searches = [String]()
     
     
@@ -55,7 +55,11 @@ struct ContentView: View {
     
     /// this function will brdge between SwiftUI and the `async` method since it cannot call it directly, it will call it and wait for it to finish
     func startSearch() {
-        searches.append(searchText)
+        withAnimation {
+            if !searches.contains(searchText) && searchText != "" {
+                searches.insert(searchText, at: 0)
+            }
+        }
         searchState = .seaching
         Task {
             do {
@@ -67,28 +71,45 @@ struct ContentView: View {
         }
     }
     
+    func delete(_ song: String) {
+        guard let index = searches.firstIndex(of: song) else { return }
+        searches.remove(at: index)
+    }
+    
     var body: some View {
         NavigationView {
-            List{
-                ForEach(tracks) { track in
-                    Text(track.artistName)
+            List(searches, id: \.self, selection: $selectedSong) { search in
+                HStack {
+                    Text(search)
+                        .contextMenu {
+                            Button("Delete", role: .destructive) {
+                                delete(search)
+                            }
+                        }
+                    Spacer()
+                }
+                .onTapGesture {
+                    searchText = selectedSong
+                    startSearch()
                 }
             }
             .frame(minWidth: 200)
+            .searchable(text: $searchText, placement: .sidebar)
+            .onSubmit(of: .search , startSearch)
+            .onDeleteCommand {
+                for search in searches {
+                    delete(search)
+                }
+            }
+            
+            
             
             VStack {
-                HStack {
-                    TextField("Search for a song", text: $searchText)
-                        .onSubmit(startSearch)
-                    Button("Search", action: startSearch)
-                }
-                .padding([.top, .horizontal])
-                
                 ScrollView {
                     switch searchState {
                     case .none:
-                        Text("Enter a search to begin.")
-                            .frame(maxHeight: .infinity)
+                        Text("Search for a Song, Artist or Album!")
+//                            .frame(maxHeight: .infinity)
                     case .seaching:
                         ProgressView()
                     case .success:
@@ -103,8 +124,12 @@ struct ContentView: View {
                             .frame(maxHeight: .infinity)
                     }
                 }
+                .ignoresSafeArea(.all)
+                .padding(30)
             }
         }
+//        .navigationTitle("Fast Track")
+        
     }
 }
 
